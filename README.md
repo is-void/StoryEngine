@@ -1,4 +1,4 @@
-An ongoing project made to simply the creation of stories.
+An ongoing project made to simply the creation of complex stories.
 This is very much a work in progress
 
 Planned features
