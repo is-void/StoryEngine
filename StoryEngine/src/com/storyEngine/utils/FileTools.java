@@ -41,6 +41,12 @@ public class FileTools
 			return (boolean)obj == true ? "true": "false";
 		return "" + obj.toString();
 	}
+	
+	public static String TrimExtension(String s)
+	{
+		int pos = s.lastIndexOf(".");
+		return pos > 0 ? s.substring(0, pos) : s;
+	}
 }
 
 

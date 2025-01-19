@@ -1,21 +1,21 @@
 package com.storyEngine.window.gui;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JTextField;
-import javax.swing.filechooser.FileSystemView;
+import javax.swing.JPanel;
 
+import com.storyEngine.Instance;
 import com.storyEngine.utils.StringProccesser;
 import com.storyEngine.window.FilePromptWindow;
 import com.storyEngine.window.FilePromptWindow.FilePromptType;
 
 public class FileLocationTextField implements ActionListener 
 {
+	
 	public HintTextField textField;
 	public JButton fileSelectButton;
 	public JButton selectButton;
@@ -28,6 +28,10 @@ public class FileLocationTextField implements ActionListener
 		fileSelectButton.addActionListener(this);
 		selectButton = new JButton("Select");
 		selectButton.addActionListener(this);
+		window.add(textField);
+		window.add(fileSelectButton);
+		window.add(selectButton);
+		
 	}
 
 	@Override
@@ -50,6 +54,15 @@ public class FileLocationTextField implements ActionListener
 			else
 			{
 				System.out.print("CHECK");
+				File d = new File(Instance.projectOrigin);
+				for(String f : d.list())
+				{
+					if(f.equals(textField.getText()))
+					{
+						window.recivePrompt(textField.getText(), FilePromptType.ERROR);
+						return;
+					}
+				}
 				window.recivePrompt(textField.getText(), FilePromptType.NAME);
 			}
 				
@@ -58,19 +71,6 @@ public class FileLocationTextField implements ActionListener
 		
 	}
 	
-	@SuppressWarnings("unused")
-	private File fileSelection(JFileChooser fileSelect)
-	{
-		fileSelect.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		switch(fileSelect.showOpenDialog(null))
-		{
-			case JFileChooser.APPROVE_OPTION :
-				return fileSelect.getSelectedFile().isDirectory() != true && fileSelect.getSelectedFile().canWrite() ? fileSelect.getSelectedFile() :  null;
-			default :
-				return null;
-				
-		}
-	}
 	
 	private File directorySelection(JFileChooser fileSelect)
 	{

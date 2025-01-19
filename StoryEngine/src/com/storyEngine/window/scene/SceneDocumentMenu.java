@@ -1,4 +1,4 @@
-package com.storyEngine.window;
+package com.storyEngine.window.scene;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,20 +8,26 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-public class DocumentMenu extends JMenuBar implements ActionListener
+public class SceneDocumentMenu extends JMenuBar implements ActionListener
 {
-	JMenu file,edit,help;    
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	JMenu file,scene,edit,help;    
 	JMenuItem cut,copy,paste,selectAll;   
 	JMenuItem save, open, save_as;
-	MainDocumentWindow document;
+	JMenuItem newScene, deleteScene;
+	SceneWindow document;
 	
-	public DocumentMenu(MainDocumentWindow doc)
+	public SceneDocumentMenu(SceneWindow doc)
 	{
 		super();
 		document = doc;
 		edit = new JMenu("Edit");
 		file = new JMenu("File");
 		help = new JMenu("Help");
+		scene = new JMenu("Scene");
 		
 		cut = new JMenuItem("cut");
 		copy = new JMenuItem("copy");
@@ -32,6 +38,9 @@ public class DocumentMenu extends JMenuBar implements ActionListener
 		open = new JMenuItem("open");
 		save_as = new JMenuItem("save as");
 		
+		newScene = new JMenuItem("new scene");
+		deleteScene = new JMenuItem("delete scene");
+		
 		edit.add(copy);
 		edit.add(cut);
 		edit.add(paste);
@@ -41,13 +50,24 @@ public class DocumentMenu extends JMenuBar implements ActionListener
 		file.add(open);
 		file.add(save_as);
 		
+		scene.add(newScene);
+		scene.add(deleteScene);
+		
 		this.add(file);
 		this.add(edit);
 		this.add(help);
+		this.add(scene);
+		
+		save.addActionListener(this);
 		selectAll.addActionListener(this);
 		copy.addActionListener(this);
 		paste.addActionListener(this);
 		cut.addActionListener(this);
+		
+		newScene.addActionListener(this);
+		
+		repaint();
+		revalidate();
 
 	}
 
@@ -72,6 +92,10 @@ public class DocumentMenu extends JMenuBar implements ActionListener
 		if(e.getSource() == save)
 		{
 			document.saveCurrentDoc();
+		}
+		if(e.getSource() == newScene)
+		{
+			document.newScene();
 		}
 		
 	}

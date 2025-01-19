@@ -9,12 +9,13 @@ public class Launcher {
 	
 	public void run() 
 	{
+		
 		if((boolean)Instance.Config.getValue(CONFIG.ISNEWUSER) == true)
 		{
-			new FilePromptWindow(new PromptStyle("Create New Project ", 400, 100, javax.swing.WindowConstants.EXIT_ON_CLOSE, "File Location", 0, 0));
+			new FilePromptWindow(new PromptStyle("Create New Project ", 400, 400, javax.swing.WindowConstants.DISPOSE_ON_CLOSE, "File Location", 400, 400));
 		} else
 		{
-			LoadProject((String) Instance.Config.getValue(CONFIG.DEFAULTPROJECTPATH));
+			LoadProject((String) Instance.Config.getValue(CONFIG.DEFAULTPROJECT));
 		}
 		
 

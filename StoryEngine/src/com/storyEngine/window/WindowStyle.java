@@ -11,6 +11,7 @@ public class WindowStyle
 		this.title = title;
 		this.width = width;
 		this.height = height;
+		this.width = width;
 		this.closeOperation = close;
 	}
 }

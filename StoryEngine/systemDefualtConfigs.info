@@ -1,3 +1,5 @@
 isNewUser: true
 defaultProject: null
+defaultScene: null
 defaultProjectPath: default
+defaultScenePath: default

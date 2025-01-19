@@ -8,7 +8,11 @@ import javax.swing.JTextField;
   
 public class HintTextField extends JTextField {  
   
-  Font gainFont = new Font("Tahoma", Font.PLAIN, 11);  
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+Font gainFont = new Font("Tahoma", Font.PLAIN, 11);  
   Font lostFont = new Font("Tahoma", Font.ITALIC, 11);  
   
   public HintTextField(int length, final String hint) {  

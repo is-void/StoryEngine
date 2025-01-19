@@ -14,6 +14,11 @@ import javax.swing.JTextArea;
 
 public class DocumentTextArea extends JEditorPane implements KeyListener
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public DocumentTextArea()
 	{
 		super();

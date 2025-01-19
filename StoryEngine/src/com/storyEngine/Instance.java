@@ -3,18 +3,14 @@ package com.storyEngine;
 import java.io.File;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.io.Writer;
 
+import com.storyEngine.scene.Scene;
+import com.storyEngine.utils.CONFIG;
 import com.storyEngine.utils.VariableListFromFile;
-import com.storyEngine.window.DocumentMenu;
-import com.storyEngine.window.MainDocumentWindow;
-import com.storyEngine.window.WindowStyle;
+import com.storyEngine.window.scene.SceneWindow;
 
 public class Instance 
 {
@@ -22,6 +18,7 @@ public class Instance
 	public static VariableListFromFile Config;
 	public static Launcher launcher;
 	public static final String projectOrigin = Instance.class.getProtectionDomain().getCodeSource().getLocation().getPath().substring(0, Instance.class.getProtectionDomain().getCodeSource().getLocation().getPath().length() - 4);
+	public static String configOrigin;
 	public static final String binPath = Instance.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	Scanner reader = new Scanner("config.info");
 	public static void main(String[] args) 
@@ -30,8 +27,9 @@ public class Instance
 		 
 		String p = projectOrigin;
 		p = p + "config.info";
+		configOrigin = p;
 		System.out.println(p);
-		Config = new VariableListFromFile(p + ""); 
+		Config = new VariableListFromFile(p); 
 		launcher = new Launcher();
 		launcher.run();
 		
@@ -40,16 +38,15 @@ public class Instance
 	public static void CreateProject(String name)
 	{
 		File directory = new File(projectOrigin + "Projects" + File.separator + name);
-		File chapters = new File(projectOrigin + "Projects" + File.separator + name + File.separator + "Chapters");
 		File projectSettings = new File(projectOrigin + "Projects" + File.separator + name + File.separator + "projectsettings.dat");
 		System.out.println(directory);
 		System.out.println(projectOrigin + "\n" +new File(projectOrigin).exists());
-		
+		Config.setValue(CONFIG.DEFAULTPROJECTPATH, projectOrigin + "Projects");
 		boolean directoryCreated = directory.mkdir();
 		  
         if (directoryCreated) { 
             System.out.println("Directory created successfully at: " + directory); 
-            chapters.mkdir();
+            Instance.CreateSceneDirectory(name);
             try {
 				projectSettings.createNewFile();
 				
@@ -72,7 +69,26 @@ public class Instance
 		File project = new File(projectOrigin + "Projects" + File.separator + projectName);
 		return project.exists();
 		*/
-		new MainDocumentWindow(projectName);
+		try {
+			Instance.SaveConfig();
+			Instance.LoadConfig();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		System.out.println((String)Instance.Config.getValue(CONFIG.DEFAULTSCENE));
+		Scene.initMap(projectOrigin + "Projects" + File.separator + projectName + File.separator + "Scenes");
+		if(!((String)Instance.Config.getValue(CONFIG.DEFAULTSCENE)).equals(CONFIG.NULL))
+		{
+			new SceneWindow((String)Instance.Config.getValue(CONFIG.DEFAULTSCENE), (String) Instance.Config.getValue(CONFIG.DEFAULTSCENEPATH));
+		} else if(((String)Instance.Config.getValue(CONFIG.DEFAULTSCENE)).equals(CONFIG.NULL))
+		{
+			new SceneWindow(projectName, "no scene");
+		}
+		
 		return true;
 	}
 	
@@ -96,6 +112,20 @@ public class Instance
 		
 			
 		
+	}
+	
+	public static void LoadConfig()
+	{
+		Config = new VariableListFromFile(configOrigin);
+	}
+	
+	
+	private static void CreateSceneDirectory(String name)
+	{
+		File scenes = new File(projectOrigin + "Projects" + File.separator + name + File.separator + "Scenes");
+		Scene.rootDirectory = scenes.getPath();
+		Instance.Config.setValue(CONFIG.DEFAULTSCENEPATH, scenes.getPath());
+		scenes.mkdir();
 	}
 	
 
