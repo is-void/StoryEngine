@@ -7,7 +7,7 @@ Planned features
 
 -Tracking the time spent on a project, wpm, and other efficiency metrics
 
--A spell check system
+-A spellcheck system
 
 -Tracking the scene, position, and status of characters
 
