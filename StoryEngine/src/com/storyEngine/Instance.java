@@ -49,7 +49,7 @@ public class Instance
             Instance.CreateSceneDirectory(name);
             try {
 				projectSettings.createNewFile();
-				
+				Instance.SaveConfig();
 				LoadProject(name);
 				
 			} catch (IOException e) {
@@ -69,20 +69,14 @@ public class Instance
 		File project = new File(projectOrigin + "Projects" + File.separator + projectName);
 		return project.exists();
 		*/
-		try {
-			Instance.SaveConfig();
-			Instance.LoadConfig();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Instance.LoadConfig();
 		
 		
 		System.out.println((String)Instance.Config.getValue(CONFIG.DEFAULTSCENE));
 		Scene.initMap(projectOrigin + "Projects" + File.separator + projectName + File.separator + "Scenes");
 		if(!((String)Instance.Config.getValue(CONFIG.DEFAULTSCENE)).equals(CONFIG.NULL))
 		{
+			System.out.println("Default Scene " + (String)Instance.Config.getValue(CONFIG.DEFAULTSCENE));
 			new SceneWindow((String)Instance.Config.getValue(CONFIG.DEFAULTSCENE), (String) Instance.Config.getValue(CONFIG.DEFAULTSCENEPATH));
 		} else if(((String)Instance.Config.getValue(CONFIG.DEFAULTSCENE)).equals(CONFIG.NULL))
 		{

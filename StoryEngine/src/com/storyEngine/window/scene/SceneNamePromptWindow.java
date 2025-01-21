@@ -31,7 +31,7 @@ public class SceneNamePromptWindow extends PromptWindow {
 	@Override
 	public void recivePrompt(String s, Object prompt) {
 		// TODO Auto-generated method 
-		Scene scene = new Scene(s, Instance.Config.getValue(CONFIG.DEFAULTSCENEPATH) + File.separator + s);
+		Scene scene = new Scene(s, (String) Instance.Config.getValue(CONFIG.DEFAULTSCENEPATH));
 		doc.changeScene(scene.getName());
 		
 		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));

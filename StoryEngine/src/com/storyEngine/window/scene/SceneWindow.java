@@ -35,8 +35,7 @@ public class SceneWindow extends JFrame
 		
 		
 		super("\"" + name + "\"" + " in " + (String)Instance.Config.getValue(CONFIG.DEFAULTPROJECT)+ " - PreAlpha v0.1");
-		System.out.println("\n\n" + Scene.scenes.get(name).getText());
-		
+		System.out.println(name);
 		setSize(1650,1080);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
@@ -64,6 +63,8 @@ public class SceneWindow extends JFrame
 		} else
 		{
 			scene = Scene.scenes.get(name);
+			System.out.println("\n" + scene);
+			System.out.println(Scene.scenes);
 			textEditor.setText(Scene.scenes.get(name).getText());
 		}
 		
@@ -75,7 +76,6 @@ public class SceneWindow extends JFrame
 	    this.addWindowListener(new java.awt.event.WindowAdapter() {
     	    @Override
     	    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-    	    	System.out.print("Check");
     	        try {
 					Instance.SaveConfig();
 				} catch (IOException e) {
@@ -91,7 +91,6 @@ public class SceneWindow extends JFrame
 	{
 		scene.setText(textEditor.getText());
 		scene.save();
-		System.out.println("Saved at " + "");
 		repaint();
 		revalidate();
 	}

@@ -63,6 +63,7 @@ public class Scene
 		} else
 		{
 			try {
+				System.out.println("Creating a new file at: " + sceneFile.getPath());
 				sceneFile.createNewFile();
 				
 			} catch (IOException e) {
@@ -80,10 +81,12 @@ public class Scene
 		File sceneFile = new File(sceneDirectory);
 		for(File f : sceneFile.listFiles())
 		{
+			System.out.print(f.getName());
 			System.out.println("\n\n"+f + "\n\n");
 			Scene s = new Scene(FileTools.TrimExtension(f.getName()), sceneDirectory);
 			scenes.put(s.name, s);
 		}
+		System.out.print("DONE INITIALIZING SCENES");
 	}
 	public void setText(String string)
 	{

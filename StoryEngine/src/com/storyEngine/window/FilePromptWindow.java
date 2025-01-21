@@ -70,7 +70,14 @@ public class FilePromptWindow extends PromptWindow
 			Instance.Config.setValue(CONFIG.DEFAULTPROJECTPATH, s);
 			Instance.Config.setValue(CONFIG.ISNEWUSER, false);
 			dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
-			Instance.LoadProject(s);
+			try {
+				Instance.SaveConfig();
+				Instance.LoadProject(s);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			
 		} else if(type == FilePromptType.NAME )
 		{
