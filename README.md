@@ -2,7 +2,7 @@ An ongoing project made to simply the creation of complex stories.
 This is very much a work in progress, so don't make anything too serious.
 All scenes are accessable as raw text by opening the .SCENE files stored in your scene directory
 
-📁 [Give it a test run here!](https://downgit.github.io/#/home?url=https://github.com/is-void/StoryEngine/blob/master/StoryForgerv0.13)
+📁 [Give it a test run here!]([https://downgit.github.io/#/home?url=https://github.com/is-void/StoryEngine/blob/master/StoryForgerv0.13](https://downgit.github.io/#/home?url=https://github.com/is-void/StoryEngine/blob/master/StoryForgerv0.13.zip))
 
 ## Download Instructions
 1. Click on the link above to download the file
