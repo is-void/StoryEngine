@@ -1,9 +1,9 @@
 An ongoing project made to simply the creation of complex stories.
 This is very much a work in progress, so don't make anything too serious.
 All scenes are accessable as the .SCENE files stored in your scene directory
-📁(Give it a test run!)[https://downgit.github.io/#/home?url=https://github.com/is-void/StoryEngine/blob/master/StoryForgerv0.13]
+📁[https://downgit.github.io/#/home?url=https://github.com/is-void/StoryEngine/blob/master/StoryForgerv0.13](Give it a test run!)
 
-###Planned features
+### Planned features
 
 - The ability to specify characters, locations, and items in each scene
 
