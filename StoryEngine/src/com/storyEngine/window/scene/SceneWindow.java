@@ -1,26 +1,34 @@
 package com.storyEngine.window.scene;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
 
 import com.storyEngine.Instance;
 import com.storyEngine.scene.Scene;
 import com.storyEngine.utils.CONFIG;
+import com.storyEngine.utils.Debug;
+import com.storyEngine.utils.InputComponent;
 import com.storyEngine.window.DocumentTextArea;
-import com.storyEngine.window.FilePromptWindow;
 import com.storyEngine.window.PromptStyle;
+import static javax.swing.ScrollPaneConstants.*;
 
-public class SceneWindow extends JFrame
+public class SceneWindow extends JFrame 
 {
 	/**
 	 * 
 	 */
+	boolean ctrl;
 	private static final long serialVersionUID = 4639932549442764716L;
 	JMenuBar menuBar;
 	JPanel panel;
@@ -28,30 +36,56 @@ public class SceneWindow extends JFrame
 	JPanel documentPanel;
 	JMenuItem item1;
 	JEditorPane textEditor;
+	JScrollPane pane;
 	Scene scene;
+	InputComponent input = new InputComponent();
+	
+	
+	
+	public SaveDocumentAction saveAction;
+	public NewSceneAction sceneAction;
+	public OpenSceneAction openAction;
+	
 	
 	public SceneWindow(String name, String scenePath)
 	{
 		
 		
 		super("\"" + name + "\"" + " in " + (String)Instance.Config.getValue(CONFIG.DEFAULTPROJECT)+ " - PreAlpha v0.1");
-		System.out.println(name);
+		Debug.Log(name, this.getClass());
 		setSize(1650,1080);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		this.setLayout(new BorderLayout());
 		
 		menuBar = new SceneDocumentMenu(this);
+		saveAction = new SaveDocumentAction(this);
+		sceneAction = new NewSceneAction(this);
+		openAction = new OpenSceneAction(this);
+		
+		input.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control S"), "CTRL+S");
+		input.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control T"), "CTRL+T");
+		input.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control O"), "CTRL+O");
 		
 		
+		input.getActionMap().put("CTRL+S", saveAction);
+		input.getActionMap().put("CTRL+T", sceneAction);
+		input.getActionMap().put("CTRL+O", openAction);
 
+		
+		add(input);
+		
 		documentPanel = new JPanel();	
 		textEditor = new DocumentTextArea();
 		documentPanel.add(textEditor);
 		documentPanel.setBounds(getBounds());
 		
 		setJMenuBar(menuBar);
-		add(textEditor, BorderLayout.CENTER);
+		pane = new JScrollPane(textEditor);
+		pane.createVerticalScrollBar();
+		pane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
+
+		add(pane, BorderLayout.CENTER);
 		add(new JPanel(), BorderLayout.WEST);
 		add(new JPanel(), BorderLayout.EAST);
 		
@@ -62,10 +96,18 @@ public class SceneWindow extends JFrame
 			textEditor.setEditable(false);
 		} else
 		{
+			Debug.Log(name, getClass());
 			scene = Scene.scenes.get(name);
-			System.out.println("\n" + scene);
-			System.out.println(Scene.scenes);
-			textEditor.setText(Scene.scenes.get(name).getText());
+			Debug.Log("\n" + scene, this.getClass());
+			Debug.Log(Scene.scenes.toString(), this.getClass());
+			if(Scene.scenes != null && Scene.scenes.get(name) != null)
+				textEditor.setText(Scene.scenes.get(name).getText());
+			else
+			{
+				textEditor.setText("Welcome to your new project!" +
+						"\n\n Press Scene + New to create a scene, or Scene + Open to Load a scene");
+				textEditor.setEditable(false);
+			}
 		}
 		
 		
@@ -77,7 +119,9 @@ public class SceneWindow extends JFrame
     	    @Override
     	    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
     	        try {
+    	        	Debug.Log(Instance.Config.getValue(CONFIG.DEFAULTSCENE).toString(), this.getClass());
 					Instance.SaveConfig();
+					Debug.Log("Closing", this.getClass());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -85,6 +129,7 @@ public class SceneWindow extends JFrame
     	    }
     	});
 	    setVisible(true);
+	    add(input);
 	}
 	
 	public void saveCurrentDoc()
@@ -97,7 +142,12 @@ public class SceneWindow extends JFrame
 	
 	public void newScene()
 	{
-		new SceneNamePromptWindow(new PromptStyle("Create New Project ", 400, 400, javax.swing.WindowConstants.DISPOSE_ON_CLOSE, "File Location", 400, 400), this);
+		new SceneNamePromptWindow(new PromptStyle("Create New Scene ", 400, 400, javax.swing.WindowConstants.DISPOSE_ON_CLOSE, "File Location", 400, 400), this);
+	}
+	
+	public void openScene()
+	{
+		new SceneChangerWindow(this);
 	}
 	
 	public void changeScene(String sceneName)
@@ -115,7 +165,65 @@ public class SceneWindow extends JFrame
 			repaint();
 			revalidate();
 		}
-		System.out.println("No such scene exists");
+		Debug.Log("No such scene exists", this.getClass());
 	}
+	
 
 }
+
+class SaveDocumentAction extends AbstractAction
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	SceneWindow window;
+	public SaveDocumentAction(SceneWindow window)
+	{
+		this.window = window;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		window.saveCurrentDoc();
+		
+	}
+	
+}
+
+class NewSceneAction extends AbstractAction
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	SceneWindow window;
+	public NewSceneAction(SceneWindow window)
+	{
+		this.window = window;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		window.newScene();
+	}
+	
+}
+class OpenSceneAction extends AbstractAction
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	SceneWindow window;
+	public OpenSceneAction(SceneWindow window)
+	{
+		this.window = window;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		window.openScene();
+	}
+	
+}
+

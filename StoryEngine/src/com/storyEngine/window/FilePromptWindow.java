@@ -1,7 +1,5 @@
 package com.storyEngine.window;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -31,18 +29,7 @@ public class FilePromptWindow extends PromptWindow
 		field = new FileLocationTextField(this);
         windowSetup();
         //pack();
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-    	    @Override
-    	    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-    	    	System.out.print("Check");
-    	        try {
-					Instance.SaveConfig();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-    	    }
-    	});
+        
 	}
 	
 	public void windowSetup()
@@ -60,7 +47,7 @@ public class FilePromptWindow extends PromptWindow
 	
 
 	@Override
-	public void recivePrompt(String s, Object t) {
+	public void recievePrompt(String s, Object t) {
 		FilePromptType type = (FilePromptType)t;
 		
 		if(type == FilePromptType.DIRECTORY)
@@ -69,15 +56,16 @@ public class FilePromptWindow extends PromptWindow
 			Instance.Config.setValue(CONFIG.DEFAULTPROJECT, s.substring(s.lastIndexOf(File.separator)+1, s.length()));
 			Instance.Config.setValue(CONFIG.DEFAULTPROJECTPATH, s);
 			Instance.Config.setValue(CONFIG.ISNEWUSER, false);
-			dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
+			
 			try {
 				Instance.SaveConfig();
 				Instance.LoadProject(s);
+				dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
+				dispose();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 			
 		} else if(type == FilePromptType.NAME )
 		{
@@ -86,9 +74,11 @@ public class FilePromptWindow extends PromptWindow
 			Instance.Config.setValue(CONFIG.DEFAULTPROJECTPATH, CONFIG.DEFAULTGENERIC);
 			Instance.Config.setValue(CONFIG.ISNEWUSER, false);
 			Instance.CreateProject(s);
+			
 			if(Instance.LoadProject(s))
 			{
 				dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
+				dispose();
 			}
 		}
 		

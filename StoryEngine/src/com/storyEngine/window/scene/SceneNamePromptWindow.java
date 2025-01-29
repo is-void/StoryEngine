@@ -2,14 +2,11 @@ package com.storyEngine.window.scene;
 
 import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
-import java.io.File;
-
 import com.storyEngine.Instance;
 import com.storyEngine.PromptWindow;
 import com.storyEngine.scene.Scene;
 import com.storyEngine.utils.CONFIG;
 import com.storyEngine.window.PromptStyle;
-import com.storyEngine.window.gui.FileLocationTextField;
 import com.storyEngine.window.gui.NameInputField;
 
 public class SceneNamePromptWindow extends PromptWindow {
@@ -29,12 +26,13 @@ public class SceneNamePromptWindow extends PromptWindow {
 	}
 
 	@Override
-	public void recivePrompt(String s, Object prompt) {
+	public void recievePrompt(String s, Object prompt) {
 		// TODO Auto-generated method 
 		Scene scene = new Scene(s, (String) Instance.Config.getValue(CONFIG.DEFAULTSCENEPATH));
 		doc.changeScene(scene.getName());
 		
 		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
+		dispose();
 		
 	}
 

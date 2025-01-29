@@ -2,16 +2,10 @@ package com.storyEngine.window.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
-
-import com.storyEngine.Instance;
 import com.storyEngine.PromptType;
-import com.storyEngine.utils.StringProccesser;
-import com.storyEngine.window.FilePromptWindow;
-import com.storyEngine.window.FilePromptWindow.FilePromptType;
 import com.storyEngine.window.scene.SceneNamePromptWindow;
 
 public class NameInputField implements ActionListener
@@ -27,7 +21,18 @@ public class NameInputField implements ActionListener
 		selectButton = new JButton("Select");
 		selectButton.addActionListener(this);
 		window.add(textField);
-		window.add(selectButton);
+		textField.add(selectButton);
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					selectAction();
+				}
+			}
+		});
+		
 		
 	}
 	@Override
@@ -35,11 +40,15 @@ public class NameInputField implements ActionListener
 		
 		if(e.getSource() == selectButton)
 		{
-			System.out.print("\nWE DOING THIS RIGHT NOW");
-			window.recivePrompt(textField.getText(), PromptType.Prompts.Name);
 			
+			selectAction();
 		}
 		
+	}
+	
+	public void selectAction()
+	{
+		window.recievePrompt(textField.getText(), PromptType.Prompts.Name);
 	}
 	
 	

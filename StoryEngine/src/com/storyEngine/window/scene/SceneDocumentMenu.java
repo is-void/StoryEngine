@@ -2,14 +2,15 @@ package com.storyEngine.window.scene;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
+import com.storyEngine.window.SceneListerWindow;
 
 public class SceneDocumentMenu extends JMenuBar implements ActionListener
 {
+	
+	
 	/**
 	 * 
 	 */
@@ -17,13 +18,14 @@ public class SceneDocumentMenu extends JMenuBar implements ActionListener
 	JMenu file,scene,edit,help;    
 	JMenuItem cut,copy,paste,selectAll;   
 	JMenuItem save, open, save_as;
-	JMenuItem newScene, deleteScene;
+	JMenuItem newScene, orderScenes;
 	SceneWindow document;
 	
 	public SceneDocumentMenu(SceneWindow doc)
 	{
 		super();
 		document = doc;
+		System.out.print(doc);
 		edit = new JMenu("Edit");
 		file = new JMenu("File");
 		help = new JMenu("Help");
@@ -39,7 +41,7 @@ public class SceneDocumentMenu extends JMenuBar implements ActionListener
 		save_as = new JMenuItem("save as");
 		
 		newScene = new JMenuItem("new scene");
-		deleteScene = new JMenuItem("delete scene");
+		orderScenes = new JMenuItem("order scenes");
 		
 		edit.add(copy);
 		edit.add(cut);
@@ -51,7 +53,7 @@ public class SceneDocumentMenu extends JMenuBar implements ActionListener
 		file.add(save_as);
 		
 		scene.add(newScene);
-		scene.add(deleteScene);
+		scene.add(orderScenes);
 		
 		this.add(file);
 		this.add(edit);
@@ -63,8 +65,11 @@ public class SceneDocumentMenu extends JMenuBar implements ActionListener
 		copy.addActionListener(this);
 		paste.addActionListener(this);
 		cut.addActionListener(this);
+		open.addActionListener(this);
 		
 		newScene.addActionListener(this);
+		orderScenes.addActionListener(this);
+		
 		
 		repaint();
 		revalidate();
@@ -97,6 +102,16 @@ public class SceneDocumentMenu extends JMenuBar implements ActionListener
 		{
 			document.newScene();
 		}
+		if(e.getSource() == orderScenes)
+		{
+			new SceneListerWindow();
+		}
+		if(e.getSource() == open)
+		{
+			new SceneChangerWindow(document);
+		}
 		
 	}
+
+	
 }

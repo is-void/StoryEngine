@@ -2,12 +2,12 @@ package com.storyEngine.window.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-
 import com.storyEngine.Instance;
 import com.storyEngine.utils.StringProccesser;
 import com.storyEngine.window.FilePromptWindow;
@@ -28,9 +28,22 @@ public class FileLocationTextField implements ActionListener
 		fileSelectButton.addActionListener(this);
 		selectButton = new JButton("Select");
 		selectButton.addActionListener(this);
+		fileSelectButton.setEnabled(false);
 		window.add(textField);
 		window.add(fileSelectButton);
 		window.add(selectButton);
+		
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					System.out.print("Check");
+					selectFile();
+				}
+			}
+		});
 		
 	}
 
@@ -47,24 +60,7 @@ public class FileLocationTextField implements ActionListener
 		}
 		if(e.getSource() == selectButton)
 		{
-			if(new File(textField.getText()).isDirectory())
-				window.recivePrompt(textField.getText(), FilePromptType.DIRECTORY);
-			else if(textField.getText().equals("name or directory") || textField.getText().length() <= 1 || StringProccesser.ContainsAnyOfCharacter(textField.getText(), "#!@#~$%^&*()_+|}{\\:;\"?/>.<,"))
-				window.recivePrompt(textField.getText(), FilePromptType.ERROR);
-			else
-			{
-				System.out.print("CHECK");
-				File d = new File(Instance.projectOrigin);
-				for(String f : d.list())
-				{
-					if(f.equals(textField.getText()))
-					{
-						window.recivePrompt(textField.getText(), FilePromptType.ERROR);
-						return;
-					}
-				}
-				window.recivePrompt(textField.getText(), FilePromptType.NAME);
-			}
+			selectFile();
 				
 			
 		}
@@ -72,6 +68,32 @@ public class FileLocationTextField implements ActionListener
 	}
 	
 	
+	private void selectFile() {
+		if(new File(textField.getText()).isDirectory())
+			window.recievePrompt(textField.getText(), FilePromptType.DIRECTORY);
+		else if(textField.getText().equals("name or directory") || textField.getText().length() <= 1 || StringProccesser.ContainsAnyOfCharacter(textField.getText(), "#!@#~$%^&*()_+|}{\\:;\"?/>.<,"))
+			window.recievePrompt(textField.getText(), FilePromptType.ERROR);
+		else
+		{
+			System.out.print("PROJECTORIGIN" + Instance.projectOrigin);
+			File d = new File(Instance.projectOrigin);
+			if(d.exists())
+			{
+				for(String f : d.list())
+				{
+					if(f.equals(textField.getText()))
+					{
+						window.recievePrompt(textField.getText(), FilePromptType.ERROR);
+						return;
+					}
+				}
+			}
+			
+			window.recievePrompt(textField.getText(), FilePromptType.NAME);
+		}
+		
+	}
+
 	private File directorySelection(JFileChooser fileSelect)
 	{
 		fileSelect.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

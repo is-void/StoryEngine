@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JEditorPane;
-import javax.swing.JTextArea;
 
 
 

@@ -1,5 +1,7 @@
 package com.storyEngine.utils;
 
+import java.util.ArrayList;
+
 public class FileTools 
 {
 	public static String[] LineVariableSplitter(String str) 
@@ -11,6 +13,24 @@ public class FileTools
 	{
 		if(str == "null")
 			return null;
+		if(str.charAt(0) == '[' && str.charAt(str.length()-1) == ']')
+		{
+			ArrayList<String> arr = new ArrayList<String>();
+			str = str.substring(1);
+			while(str.indexOf(',') != -1)
+			{
+				arr.add(str.substring(0, str.indexOf(',')));
+				str = str.substring(str.indexOf(',') + 2);
+				
+			}
+			
+			if(str.indexOf(']') != 0)
+			{
+				arr.add(str.substring(0, str.length()-1));
+			}
+			return arr;
+		}
+		
 		switch(str)
 		{
 			case "true":

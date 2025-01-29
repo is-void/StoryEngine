@@ -1,13 +1,7 @@
 package com.storyEngine;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
-
 import com.storyEngine.window.PromptStyle;
 
 public abstract class PromptWindow extends JFrame
@@ -17,7 +11,7 @@ public abstract class PromptWindow extends JFrame
 	 */
 	private static final long serialVersionUID = 1L;
 	protected JPanel panel;
-	public abstract void recivePrompt(String s, Object prompt);
+	public abstract void recievePrompt(String s, Object prompt);
 	
 	public PromptWindow(PromptStyle style)
 	{
