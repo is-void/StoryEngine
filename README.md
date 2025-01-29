@@ -1,14 +1,16 @@
 An ongoing project made to simply the creation of complex stories.
-This is very much a work in progress
+This is very much a work in progress, so don't make anything too serious.
+All scenes are accessable as the .SCENE files stored in your scene directory
+📁(Give it a test run!)[https://downgit.github.io/#/home?url=https://github.com/is-void/StoryEngine/blob/master/StoryForgerv0.13]
 
-Planned features
+###Planned features
 
--The ability to specify characters, locations, and items in each scene
+- The ability to specify characters, locations, and items in each scene
 
--Tracking the time spent on a project, wpm, and other efficiency metrics
+- Tracking the time spent on a project, wpm, and other efficiency metrics
 
--A spellcheck system
+- A spellcheck system
 
--Tracking the scene, position, and status of characters
+- Tracking the scene, position, and status of characters
 
--A timeline system
+- A timeline system
