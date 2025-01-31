@@ -1,21 +1,16 @@
 An ongoing project made to simply the creation of complex stories.
-This is very much a work in progress, so don't make anything too serious.
+This is very much a work in progress, so unexpected bugs may appear
 All scenes are accessable as raw text by opening the .SCENE files stored in your scene directory
 
-📁 [Give it a test run here!]([https://downgit.github.io/#/home?url=https://github.com/is-void/StoryEngine/blob/master/StoryForgerv0.13](https://downgit.github.io/#/home?url=https://github.com/is-void/StoryEngine/blob/master/StoryForgerv0.13.zip))
 
-## Download Instructions
-1. Click on the link above to download the file
-2. Extract the file to your prefered location
-3. Open the extracted folder and click on StoryForger.exe
-
-####  Note: Deleting or altering the config file will disassociate the program with your project. Don't mess with it unless you know what you are doing.
+####  Note: Deleting or altering the config file may disassociate the program with your project. Modify at your own risk.
 
 ### Planned features
-
+- Storying Scenes using .rtf files to support more text options
+  
 - The ability to specify characters, locations, and items in each scene
 
-- Tracking the time spent on a project, wpm, and other efficiency metrics
+- Tracking the time spent on a project, wpm, and other metrics
 
 - A spellcheck system
 
