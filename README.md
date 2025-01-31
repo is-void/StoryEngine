@@ -1,5 +1,6 @@
 An ongoing project made to simply the creation of complex stories.
-This is very much a work in progress, so unexpected bugs may appear
+This is very much a work in progress, so unexpected bugs may appear.
+
 All scenes are accessable as raw text by opening the .SCENE files stored in your scene directory
 
 
